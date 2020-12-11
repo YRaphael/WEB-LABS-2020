@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<header class="weather-header">
+    <h1 class="weather-here-title">Погода здесь</h1>
+    <button class="weather-update-btn-lg" type="button" name="updateLocation">Обновить геолокацию</button>
+    <button class="weather-update-btn-sm-m" type="button" name="updateLocation">
+        <img src="images/location-update.png" class="weather-update-img" alt="update"/>
+    </button>
+</header>
+
+<main class="weather-main">
+    <section class="weather-current-city-info">
+        <div class="weather-current-city">
+            <h2 class="weather-current-city-name">Saint-Petersburg</h2>
+            <div class="weather-current">
+                <img src="images/broken_clouds.png" class="weather-current-img" alt="weather"/>
+                <p class="weather-current-degrees">8&deg;C</p>
+            </div>
+        </div>
+
+
+        <ul class="weather-info">
+            <li class="weather-characteristic">
+                <span>Ветер</span>
+                <p>Moderate breeze, 6.0 m/s, North-northwest</p>
+            </li>
+
+            <li class="weather-characteristic">
+                <span>Облачность</span>
+                <p>Broken clouds</p>
+            </li>
+
+            <li class="weather-characteristic">
+                <span>Давление</span>
+                <p>1013 hpa</p>
+            </li>
+
+            <li class="weather-characteristic">
+                <span>Влажность</span>
+                <p>52 %</p>
+            </li>
+
+            <li class="weather-characteristic">
+                <span>Координаты</span>
+                <p>[59.88, 30.42]</p>
+            </li>
+        </ul>
+    </section>
+
+    <section class="favorite">
+        <div class="favorite-top">
+            <h2>Избранное</h2>
+            <div>
+                <form action="https://localhost" class="add-new-city">
+                    <label class="new-city-label">
+                        <input class="new-city" type="text" placeholder="Добавить новый город">
+                    </label>
+                    <button type="button" name="button" class="favorite-add-btn">+</button>
+                </form>
+            </div>
+        </div>
+
+        <ul class="favorite-cities">
+            <li class="favorite-city">
+                <div class="favorite-weather">
+                    <h3>Moscow</h3>
+                    <p class="degrees">-8&deg;C</p>
+                    <img src="images/broken_clouds.png" class="favorite-weather-img" alt="weather small"/>
+                    <button type="button" name="button" class="weather-info-delete-btn">+</button>
+                </div>
+
+                <ul class="weather-info">
+                    <li class="weather-characteristic">
+                        <span>Ветер</span>
+                        <p>Moderate breeze, 6.0 m/s, North-northwest</p>
+                    </li>
+                    <li class="weather-characteristic">
+                        <span>Облачность</span>
+                        <p>Broken clouds</p>
+                    </li>
+                    <li class="weather-characteristic">
+                        <span>Давление</span>
+                        <p>1013 hpa</p>
+                    </li>
+                    <li class="weather-characteristic">
+                        <span>Влажность</span>
+                        <p>52 %</p>
+                    </li>
+                    <li class="weather-characteristic">
+                        <span>Координаты</span>
+                        <p>[59.88, 30.42]</p>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="favorite-city">
+                <div class="favorite-weather">
+                    <h3>Helsinki</h3>
+                    <p class="degrees">3&deg;C</p>
+                    <img src="images/broken_clouds.png" class="favorite-weather-img" alt="weather small"/>
+                    <button type="button" name="button" class="weather-info-delete-btn">+</button>
+                </div>
+
+                <ul class="weather-info">
+                    <li class="weather-characteristic">
+                        <span>Ветер</span>
+                        <p>Moderate breeze, 6.0 m/s, North-northwest</p>
+                    </li>
+                    <li class="weather-characteristic">
+                        <span>Облачность</span>
+                        <p>Broken clouds</p>
+                    </li>
+                    <li class="weather-characteristic">
+                        <span>Давление</span>
+                        <p>1013 hpa</p>
+                    </li>
+                    <li class="weather-characteristic">
+                        <span>Влажность</span>
+                        <p>52 %</p>
+                    </li>
+                    <li class="weather-characteristic">
+                        <span>Координаты</span>
+                        <p>[59.88, 30.42]</p>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="favorite-city">
+                <div class="favorite-weather">
+                    <h3>Moscow</h3>
+                    <p class="degrees">-8&deg;C</p>
+                    <img src="images/broken_clouds.png" class="favorite-weather-img" alt="weather small"/>
+                    <button type="button" name="button" class="weather-info-delete-btn">+</button>
+                </div>
+
+                <ul class="weather-info">
+                    <li class="weather-characteristic">
+                        <span>Ветер</span>
+                        <p>Moderate breeze, 6.0 m/s, North-northwest</p>
+                    </li>
+                    <li class="weather-characteristic">
+                        <span>Облачность</span>
+                        <p>Broken clouds</p>
+                    </li>
+                    <li class="weather-characteristic">
+                        <span>Давление</span>
+                        <p>1013 hpa</p>
+                    </li>
+                    <li class="weather-characteristic">
+                        <span>Влажность</span>
+                        <p>52 %</p>
+                    </li>
+                    <li class="weather-characteristic">
+                        <span>Координаты</span>
+                        <p>[59.88, 30.42]</p>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="favorite-city">
+                <div class="favorite-weather">
+                    <h3>Helsinki</h3>
+                    <p class="degrees">3&deg;C</p>
+                    <img src="images/broken_clouds.png" class="favorite-weather-img" alt="weather small"/>
+                    <button type="button" name="button" class="weather-info-delete-btn">+</button>
+                </div>
+
+                <ul class="weather-info">
+                    <li class="weather-characteristic">
+                        <span>Ветер</span>
+                        <p>Moderate breeze, 6.0 m/s, North-northwest</p>
+                    </li>
+                    <li class="weather-characteristic">
+                        <span>Облачность</span>
+                        <p>Broken clouds</p>
+                    </li>
+                    <li class="weather-characteristic">
+                        <span>Давление</span>
+                        <p>1013 hpa</p>
+                    </li>
+                    <li class="weather-characteristic">
+                        <span>Влажность</span>
+                        <p>52 %</p>
+                    </li>
+                    <li class="weather-characteristic">
+                        <span>Координаты</span>
+                        <p>[59.88, 30.42]</p>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="favorite-city">
+                <div class="favorite-weather">
+                    <h3>Moscow</h3>
+                    <p class="degrees">-8&deg;C</p>
+                    <img src="images/broken_clouds.png" class="favorite-weather-img" alt="weather small"/>
+                    <button type="button" name="button" class="weather-info-delete-btn">+</button>
+                </div>
+
+                <ul class="weather-info">
+                    <li class="weather-characteristic">
+                        <span>Ветер</span>
+                        <p>Moderate breeze, 6.0 m/s, North-northwest</p>
+                    </li>
+                    <li class="weather-characteristic">
+                        <span>Облачность</span>
+                        <p>Broken clouds</p>
+                    </li>
+                    <li class="weather-characteristic">
+                        <span>Давление</span>
+                        <p>1013 hpa</p>
+                    </li>
+                    <li class="weather-characteristic">
+                        <span>Влажность</span>
+                        <p>52 %</p>
+                    </li>
+                    <li class="weather-characteristic">
+                        <span>Координаты</span>
+                        <p>[59.88, 30.42]</p>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="favorite-city">
+                <div class="favorite-weather">
+                    <h3>Helsinki</h3>
+                    <p class="degrees">3&deg;C</p>
+                    <img src="images/broken_clouds.png" class="favorite-weather-img" alt="weather small"/>
+                    <button type="button" name="button" class="weather-info-delete-btn">+</button>
+                </div>
+
+                <ul class="weather-info">
+                    <li class="weather-characteristic">
+                        <span>Ветер</span>
+                        <p>Moderate breeze, 6.0 m/s, North-northwest</p>
+                    </li>
+                    <li class="weather-characteristic">
+                        <span>Облачность</span>
+                        <p>Broken clouds</p>
+                    </li>
+                    <li class="weather-characteristic">
+                        <span>Давление</span>
+                        <p>1013 hpa</p>
+                    </li>
+                    <li class="weather-characteristic">
+                        <span>Влажность</span>
+                        <p>52 %</p>
+                    </li>
+                    <li class="weather-characteristic">
+                        <span>Координаты</span>
+                        <p>[59.88, 30.42]</p>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+</main>
+</body>
