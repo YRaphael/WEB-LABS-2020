@@ -12,14 +12,14 @@
 <header class="weather-top">
     <h1 class="weather-top-name">Погода здесь</h1>
     <form method="get" name="updateLocation">
-        <button class="update-btn" type="button" name="updateLocation">Обновить геолокацию</button>
-        <button class="update-btn-img" type="button" name="updateLocation">
-            <img src="images/location-update.png" class="update-img" alt="update"/>
+        <button class="weather-update-btn-lg" type="button" name="updateLocation">Обновить геолокацию</button>
+        <button class="weather-update-btn-sm-m" type="button" name="updateLocation">
+            <img src="images/location-update.png" class="weather-update-img" alt="update"/>
         </button>
     </form>
 </header>
 
-<main class="main">
+<main class="weather-main">
     <section class="current-city-info"></section>
 
     <section class="favorite">
@@ -27,8 +27,10 @@
             <h2>Избранное</h2>
             <div>
                 <form method="get" name="addNewCity" class="add-new-city">
-                    <input name="newCityName" class="new-city" type="text" placeholder="Добавить новый город">
-                    <input type="submit" value="+" class="add-btn">
+                    <label class="new-city-label">
+                        <input name="newCityName" class="new-city" type="text" placeholder="Добавить новый город">
+                    </label>
+                    <input type="submit" value="+" class="favorite-add-btn">
                 </form>
             </div>
         </div>
@@ -48,31 +50,31 @@
 </template>
 
 <template id="tempCurrentCity">
-    <div class="current-city">
-        <h2 class="current-city-name"></h2>
+    <div class="weather-current-city">
+        <h2 class="weather-current-city-name"></h2>
         <div class="current-weather">
-            <img src="" class="current-weather-img" alt="weather"/>
+            <img src="" class="weather-current-img" alt="weather"/>
             <p class="current-degrees"></p>
         </div>
     </div>
     <ul class="weather-info">
-        <li class="characteristic">
+        <li class="weather-characteristic">
             <span>Ветер</span>
             <p></p>
         </li>
-        <li class="characteristic">
+        <li class="weather-characteristic">
             <span>Облачность</span>
             <p></p>
         </li>
-        <li class="characteristic">
+        <li class="weather-characteristic">
             <span>Давление</span>
             <p></p>
         </li>
-        <li class="characteristic">
+        <li class="weather-characteristic">
             <span>Влажность</span>
             <p></p>
         </li>
-        <li class="characteristic">
+        <li class="weather-characteristic">
             <span>Координаты</span>
             <p></p>
         </li>
@@ -85,27 +87,27 @@
             <h3 class="favorite-city-name"></h3>
             <p class="degrees"></p>
             <img src="" class="favorite-weather-img" alt="weather small"/>
-            <button onclick="" type="button" name="button" class="delete-btn">+</button>
+            <button onclick="" type="button" name="button" class="weather-info-delete-btn">+</button>
         </div>
 
         <ul class="weather-info">
-            <li class="characteristic">
+            <li class="weather-characteristic">
                 <span>Ветер</span>
                 <p></p>
             </li>
-            <li class="characteristic">
+            <li class="weather-characteristic">
                 <span>Облачность</span>
                 <p></p>
             </li>
-            <li class="characteristic">
+            <li class="weather-characteristic">
                 <span>Давление</span>
                 <p></p>
             </li>
-            <li class="characteristic">
+            <li class="weather-characteristic">
                 <span>Влажность</span>
                 <p></p>
             </li>
-            <li class="characteristic">
+            <li class="weather-characteristic">
                 <span>Координаты</span>
                 <p></p>
             </li>

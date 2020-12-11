@@ -74,8 +74,8 @@ function fillCurrentCityInfo(params) {
     request(params).then((jsonResult) => {
         const template = document.querySelector('#tempCurrentCity');
         const imp = document.importNode(template.content, true)
-        imp.querySelector('.current-city-name').innerHTML = jsonResult.name;
-        imp.querySelector('.current-weather-img').src = `images/weather/${getWeatherIcon(jsonResult)}.png`;
+        imp.querySelector('.weather-current-city-name').innerHTML = jsonResult.name;
+        imp.querySelector('.weather-current-img').src = `images/weather/${getWeatherIcon(jsonResult)}.png`;
         imp.querySelector('.current-degrees').innerHTML = `${Math.floor(jsonResult.main.temp)}&deg;C`;
         fillWeatherInfo(jsonResult, imp);
         document.getElementsByClassName('current-city-info')[0].innerHTML = '';
@@ -205,7 +205,7 @@ function addCity(jsonResult, newCity) {
     imp.querySelector('.favorite-city-name').innerHTML = cityName;
     imp.querySelector('.degrees').innerHTML = `${Math.floor(jsonResult.main.temp)}&deg;C`;
     imp.querySelector('.favorite-weather-img').src = `images/weather/${getWeatherIcon(jsonResult)}.png`;
-    imp.querySelector('.delete-btn')
+    imp.querySelector('.weather-info-delete-btn')
         .addEventListener('click', () => deleteCity(cityName));
     fillWeatherInfo(jsonResult, imp);
     newCity.innerHTML = '';
