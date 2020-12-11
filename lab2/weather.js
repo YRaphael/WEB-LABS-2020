@@ -29,7 +29,6 @@ function request(params) {
 }
 
 function addSavedCities() {
-    // alert('AAAAAAAAAAAAAA')
     for (let i = 0; i < localStorage.length; i++) {
         const newCity = newCityLoaderInfo();
         let key = localStorage.key(i);
@@ -182,7 +181,6 @@ function addNewCity() {
     request(['q=' + cityName]).then((jsonResult) => {
         if (jsonResult && !localStorage.hasOwnProperty(jsonResult.name)) {
             localStorage.setItem(jsonResult.name, '');
-            //alert(localStorage.length.toString())
             addCity(jsonResult, newCity);
         } else {
             newCity.remove();
@@ -294,17 +292,13 @@ function haveWind(wind) {
 }
 
 function havePrecipitation(jsonResult) {
-    // Todo: property rain doesn't have property 1h and 3h
-    //let rs = 'snow: ' + snow[`3h`] + '; rain: ' + rain[`3h`];
     let rain = 0;
     let snow = 0;
     if (jsonResult.hasOwnProperty('rain') && jsonResult.rain.hasOwnProperty('1h')) {
         rain = jsonResult.rain['1h'];
-        //alert("RAIN ITS A PAIN");
     }
     if (jsonResult.hasOwnProperty('snow') && jsonResult.snow.hasOwnProperty('1h')) {
         snow = jsonResult.snow['1h'];
-        //alert("SNOW TOO");
     }
     if (snow > rain) {
         if (snow > 0.1) {
@@ -314,16 +308,6 @@ function havePrecipitation(jsonResult) {
         if (rain !== 0) {
             return 'rain';
         }
-        // Todo: 1h it's small data for predict precipitation
-        // if (rain < 0.3) {
-        //     return 'no';
-        // } else if (rain < 3) {
-        //     return 'mistyrain';
-        // } else if (rain < 15) {
-        //     return 'rain';
-        // } else if (rain > 14) {
-        //     return 'downpour';
-        // }
     }
     return 'no';
 }
@@ -334,7 +318,7 @@ function getTimeOfDay(jsonResult) {
     now.setMinutes(0);
     now.setHours(0);
     now.setSeconds(now.getSeconds() + jsonResult.dt + jsonResult.timezone);
-    if (now.getHours() > 21 || now.getHours() < 6) { // Todo: check timings sunrise and sunset
+    if (now.getHours() > 21 || now.getHours() < 6) {
         return 'night';
     }
     return 'day';
