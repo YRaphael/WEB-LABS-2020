@@ -13,10 +13,10 @@ const pg = require('pg');
 
 const config = {
     host: 'localhost',
-    user: 'postgres',
-    password: '123654',
-    database: 'favourites',
-    port: 8080
+    user: 'admin',
+    password: 'admin',
+    database: 'postgresweb',
+    port: 5432
 };
 
 const client = new pg.Client(config);
