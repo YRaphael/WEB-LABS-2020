@@ -61,14 +61,14 @@ server.get('/weather/coordinates', (req, res) => {
 
 server.get('/favourites', (req, res) => {
 
-    const query = 'SELECT * FROM \"cities\"';
+    const query = 'SELECT * FROM \"fav_cities\"';
 
     client.query(query)
         .then(data => {
             let cities_data = data.rows;
             let cities = []
             for (let i = 0; i < cities_data.length; i++) {
-                cities.push(cities_data[i].city_name)
+                cities.push(cities_data[i].fav_city_name)
             }
             res.send({cities});
         })
@@ -78,12 +78,12 @@ server.get('/favourites', (req, res) => {
 })
 
 server.post('/favourites', (req, res) => {
-    let city_name = req.body.name;
-    let textType = typeof city_name;
+    let fav_city_name = req.body.name;
+    let textType = typeof fav_city_name;
 
     res.setHeader('Content-Type', `text/${textType}; charset=UTF-8`)
 
-    let query = "INSERT INTO \"cities\" (city_name) VALUES ('"+ city_name + "')";
+    let query = "INSERT INTO \"fav_cities\" (fav_city_name) VALUES ('"+ fav_city_name + "')";
     client.query(query)
         .then(() => {
             res.sendStatus(200);
@@ -100,8 +100,8 @@ server.options('*', (req, res) => {
 });
 
 server.delete('/favourites', (req, res) => {
-    let city_name = req.body.name;
-    let query = 'DELETE FROM \"cities\" WHERE city_name=\'' + city_name + '\'';
+    let fav_city_name = req.body.name;
+    let query = 'DELETE FROM \"fav_cities\" WHERE fav_city_name=\'' + fav_city_name + '\'';
 
     client
         .query(query)
