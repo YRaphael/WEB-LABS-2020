@@ -158,7 +158,7 @@ ul {
     border-radius: 5px;
     border: none;
     color: #728288;
-    padding: 10px;
+    padding: 15px;
 }
 
 .new-city {
@@ -168,7 +168,7 @@ ul {
     border-radius: inherit;
     border: inherit;
     color: inherit;
-    padding: inherit;
+    width: 100%;
 }
 
 .current-city-loader {
@@ -240,7 +240,7 @@ ul {
     }
 
     .new-city {
-        width: 90%;
+        width: 100%;
         font-size: 1em;
     }
 

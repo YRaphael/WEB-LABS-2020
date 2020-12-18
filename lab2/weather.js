@@ -7,7 +7,7 @@ updateLocationForm.addEventListener('click', (event) => {
 })
 
 addNewCityForm.addEventListener('submit', (event) => {
-    addNewCity();
+    addNewCity(event);
     event.preventDefault();
 })
 
@@ -170,20 +170,28 @@ function getTypeOfCloudy(percent) {
     }
 }
 
-function addNewCity() {
-    const formData = new FormData(addNewCityForm);
-    const cityName = formData.get('newCityName').toString();
+function addNewCity(event) {
+    const cityName = event.target.elements.newCityName.value//event.currentTarget.valueOf("newCityName"); //formData.get('newCityName').toString();
+
+    if (cityName === "") {
+        alert("blank city name");
+        return;
+    }
     addNewCityForm.reset();
     if (localStorage.hasOwnProperty(cityName)) {
+        alert("City already exists");
         return;
     }
     const newCity = newCityLoaderInfo();
     request(['q=' + cityName]).then((jsonResult) => {
-        if (jsonResult && !localStorage.hasOwnProperty(jsonResult.name)) {
-            localStorage.setItem(jsonResult.name, '');
-            addCity(jsonResult, newCity);
-        } else {
-            newCity.remove();
+        if (jsonResult) {
+            if (jsonResult && !localStorage.hasOwnProperty(jsonResult.name)) {
+                localStorage.setItem(jsonResult.name, '');
+                addCity(jsonResult, newCity);
+            } else {
+                alert("City already exists");
+                newCity.remove();
+            }
         }
     });
 }
