@@ -2,6 +2,8 @@
     font-family: 'Times New Roman', serif;
 }
 
+
+
 h2 {
     font-size: 2em;
     color: #77868a;
@@ -51,6 +53,8 @@ ul {
 /*MAIN AND ELEMENTS INSIDE MAIN*/
 .weather-main {
     margin: 2%;
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 /*CURRENT CITY AND ELEMENTS INSIDE CURRENT CITY*/
