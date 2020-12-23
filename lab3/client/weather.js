@@ -47,14 +47,14 @@ function getLocation() {
     if (currentLocation) {
         currentLocation.getCurrentPosition(
             (position) => {
-                fillCurrentCityInfo('coordinates',[`lat=${position.coords.latitude}`, `lon=${position.coords.longitude}`]);
+                fillCurrentCityInfo('coordinates', [`lat=${position.coords.latitude}`, `lon=${position.coords.longitude}`]);
             },
             (error) => {
-                fillCurrentCityInfo('city',['q=Saint Petersburg']);
+                fillCurrentCityInfo('city', ['q=Saint Petersburg']);
             }
         );
     } else {
-        fillCurrentCityInfo('city',['q=Saint Petersburg']);
+        fillCurrentCityInfo('city', ['q=Saint Petersburg']);
     }
 }
 
@@ -223,10 +223,14 @@ function addCity(jsonResult, newCity) {
     fillWeatherInfo(jsonResult, imp);
     newCity.innerHTML = '';
     newCity.append(imp);
+    console.log("created")
 }
 
 function deleteCity(cityName) {
-    const delBtn = document.getElementById(cityName.split(' ').join('-')).querySelector('.delete-btn');
+    console.log("\"" + cityName.split(' ').join('-') + "\"")
+    console.log(document.getElementById(cityName.split(' ').join('-')))
+
+    const delBtn = document.getElementById( cityName.split(' ').join('-') ).querySelector('.weather-info-delete-btn');
     delBtn.style.backgroundColor = '#b0bbc1';
     delBtn.disabled = true;
     fetch('http://localhost:8081/favourites', {

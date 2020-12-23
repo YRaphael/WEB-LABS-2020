@@ -1,13 +1,11 @@
-const express = require('express')
-const fetch = require('node-fetch');
 const cors = require('cors')
-const server = express()
-const port = 8081
-const api_key = '52f8f9af79e0664f928042deb0e2b888'
+const fetch = require('node-fetch');
+const express = require('express')
 const bodyParser = require('body-parser')
 
-server.use(bodyParser.json());
-server.use(bodyParser.urlencoded({ extended: true }));
+const port = 8081
+const server = express()
+const api_key = '52f8f9af79e0664f928042deb0e2b888'
 
 const pg = require('pg');
 
@@ -22,14 +20,22 @@ const config = {
 const client = new pg.Client(config);
 client.connect();
 
-server.use(cors())
 
+server.use(bodyParser.json());
+server.use(bodyParser.urlencoded({extended: true}));
+server.use(cors())
 server.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept');
     res.setHeader('Accept-Charset', 'utf-8')
     next();
+});
+
+server.options('*', (req, res) => {
+    res.set('Access-Control-Allow-Origin', '*');
+    res.set('Access-Control-Allow-Methods', 'GET, DELETE, OPTIONS, POST');
+    res.send('ok');
 });
 
 server.get('/weather/city', (req, res) => {
@@ -50,7 +56,8 @@ server.get('/weather/city', (req, res) => {
 server.get('/weather/coordinates', (req, res) => {
     let lat = req.query.lat;
     let lon = req.query.lon;
-    fetch('https://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&units=metric' + '&appid=' + api_key)
+    const url = 'https://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&units=metric' + '&appid=' + api_key;
+    fetch(url)
         .then(function (resp) {
             return resp.json()
         })
@@ -60,9 +67,7 @@ server.get('/weather/coordinates', (req, res) => {
 })
 
 server.get('/favourites', (req, res) => {
-
     const query = 'SELECT * FROM \"fav_cities\"';
-
     client.query(query)
         .then(data => {
             let cities_data = data.rows;
@@ -83,7 +88,7 @@ server.post('/favourites', (req, res) => {
 
     res.setHeader('Content-Type', `text/${textType}; charset=UTF-8`)
 
-    let query = "INSERT INTO \"fav_cities\" (fav_city_name) VALUES ('"+ fav_city_name + "')";
+    let query = "INSERT INTO \"fav_cities\" (fav_city_name) VALUES ('" + fav_city_name + "')";
     client.query(query)
         .then(() => {
             res.sendStatus(200);
@@ -93,16 +98,10 @@ server.post('/favourites', (req, res) => {
         });
 })
 
-server.options('*', (req, res) => {
-    res.set('Access-Control-Allow-Origin', '*');
-    res.set('Access-Control-Allow-Methods', 'GET, DELETE, OPTIONS, POST');
-    res.send('ok');
-});
-
 server.delete('/favourites', (req, res) => {
     let fav_city_name = req.body.name;
     let query = 'DELETE FROM \"fav_cities\" WHERE fav_city_name=\'' + fav_city_name + '\'';
-
+    console.log(query)
     client
         .query(query)
         .then(result => {
