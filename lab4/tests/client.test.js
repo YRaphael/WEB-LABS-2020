@@ -399,8 +399,8 @@ describe('CLIENT: add new favourite city', () => {
         let form = document.forms.namedItem('addNewCity');
         form.getElementsByTagName('input')[0].value = cityName;
         alert = sinon.spy();
-        client.addNewCity().then((res) => {                                                                   expect(!
-            alert.calledOnce                                                                                        ).to.be.true;
+        client.addNewCity().then((res) => {                                                                                                         expect(!
+            alert.calledOnce                                                                                                                              ).to.be.true;
             done();
         }).catch(done);
     });
