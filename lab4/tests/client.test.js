@@ -151,7 +151,7 @@ global.FormData = window.FormData;
 const geolocate = require('mock-geolocation');
 const {getAddNewCityForm} = require("../client/weather");
 geolocate.use();
-//client.init();
+client.init();
 const baseURL = 'http://localhost:9090';
 
 const spbResponse = {
