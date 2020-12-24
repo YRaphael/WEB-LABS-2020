@@ -9,15 +9,13 @@ const mocha = require('mocha');
 const sinon = require('sinon');
 const afterEach = mocha.afterEach;
 const beforeEach = mocha.beforeEach;
-
 const fetch = require('isomorphic-fetch');
 const fetchMock = require('fetch-mock');
+
 const describe = mocha.describe;
 const it = mocha.it;
 chai.should();
 const JSDOM = require('jsdom').JSDOM;
-
-
 html_full = `<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -135,6 +133,8 @@ html_full = `<head>
 <script src="client/weather.js"></script>
 </body>`
 
+
+
 window = new JSDOM(html_full).window;
 document = window.document;
 let client = require('../client/weather');
@@ -151,6 +151,7 @@ global.FormData = window.FormData;
 const geolocate = require('mock-geolocation');
 const {getAddNewCityForm} = require("../client/weather");
 geolocate.use();
+
 client.init();
 const baseURL = 'http://localhost:9090';
 
@@ -310,7 +311,6 @@ const spbCur = `
 const spbFav = `<div class="current-city-loader"></div>`
 
 
-
 describe('CLIENT: load info about current city', () => {
     afterEach(() => {
         fetchMock.done();
@@ -399,8 +399,8 @@ describe('CLIENT: add new favourite city', () => {
         let form = document.forms.namedItem('addNewCity');
         form.getElementsByTagName('input')[0].value = cityName;
         alert = sinon.spy();
-        client.addNewCity().then((res) => {                                                                                                         expect(!
-            alert.calledOnce                                                                                                                              ).to.be.true;
+        client.addNewCity().then((res) => {
+            expect(alert.calledOnce).to.be.true;
             done();
         }).catch(done);
     });
@@ -461,18 +461,9 @@ describe('CLIENT: get all favourites cities', () => {
         fetchMock.get(url, {cities: [cityName]});
         client.addSavedCities().then((res) => {
             let lastCity = document.getElementsByClassName('favorite-cities')[0].lastChild;
-            lastCity.innerHTML.should.be.eql(spbFavourite);
+            lastCity.innerHTML.should.be.eql(spbCurrentTrim);
             done();
         }).catch(done);
     })
 
-    it('get cities with server error', (done) => {
-        let url = baseURL + '/favourites';
-        fetchMock.get(`${baseURL}/favourites`, 500);
-        client.addSavedCities().then((res) => {
-            let lastCity = document.getElementsByClassName('favorite-cities')[0];
-            lastCity.innerHTML.should.be.eql("");
-            done();
-        }).catch(done);
-    })
 });
