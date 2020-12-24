@@ -201,16 +201,16 @@ const spbResponse = {
 
 const spbCurrent = `
     <div class="weather-current-city">
-        <h2 class="weather-current-city-name">Malaya Okhta</h2>
+        <h2 class="weather-current-city-name">Saint Petersburg</h2>
         <div class="current-weather">
             <img src="images/weather/snow.png" class="weather-current-img" alt="weather">
-            <p class="current-degrees">0°C</p>
+            <p class="current-degrees">-1°C</p>
         </div>
     </div>
     <ul class="weather-info">
         <li class="weather-characteristic">
             <span>Ветер</span>
-            <p>Light breeze, 3 m/s, South</p>
+            <p>Light breeze, 4 m/s, South-Southeast</p>
         </li>
         <li class="weather-characteristic">
             <span>Облачность</span>
@@ -218,24 +218,28 @@ const spbCurrent = `
         </li>
         <li class="weather-characteristic">
             <span>Давление</span>
-            <p>1004 hpa</p>
+            <p>1006 hpa</p>
         </li>
         <li class="weather-characteristic">
             <span>Влажность</span>
-            <p>98 %</p>
+            <p>92 %</p>
         </li>
         <li class="weather-characteristic">
             <span>Координаты</span>
-            <p>[59.93, 30.36]</p>
+            <p>[59.89, 30.26]</p>
         </li>
     </ul>
+`
+
+const currentCityMainCityByPosition = `
+    <div class="current-city-loader"></div>
 `
 
 const spbFavourite = `
     <li class="favorite-city">
         <div class="favorite-weather">
             <h3 class="favorite-city-name">Saint Petersburg</h3>
-            <p class="degrees">0°C</p>
+            <p class="degrees">-1°C</p>
             <img src="images/weather/snow.png" class="favorite-weather-img" alt="weather small">
             <button onclick="" type="button" name="button" class="weather-info-delete-btn">+</button>
         </div>
@@ -243,7 +247,7 @@ const spbFavourite = `
         <ul class="weather-info">
             <li class="weather-characteristic">
                 <span>Ветер</span>
-                <p>Light breeze, 3 m/s, South</p>
+                <p>Light breeze, 4 m/s, South-Southeast</p>
             </li>
             <li class="weather-characteristic">
                 <span>Облачность</span>
@@ -251,11 +255,11 @@ const spbFavourite = `
             </li>
             <li class="weather-characteristic">
                 <span>Давление</span>
-                <p>1004 hpa</p>
+                <p>1006 hpa</p>
             </li>
             <li class="weather-characteristic">
                 <span>Влажность</span>
-                <p>97 %</p>
+                <p>92 %</p>
             </li>
             <li class="weather-characteristic">
                 <span>Координаты</span>
@@ -265,8 +269,42 @@ const spbFavourite = `
     </li>
 `
 
-const spbCur = `
+const spbCurrentFill = `
     <div class="current-city-loader"></div>
+`;
+
+const spbCurrentTrim = `<div class="current-city-loader"></div>`;
+
+const spbCur = `
+    <div class="weather-current-city">
+        <h2 class="weather-current-city-name">Saint Petersburg</h2>
+        <div class="current-weather">
+            <img src="images/weather/snow.png" class="weather-current-img" alt="weather">
+            <p class="current-degrees">-1°C</p>
+        </div>
+    </div>
+    <ul class="weather-info">
+        <li class="weather-characteristic">
+            <span>Ветер</span>
+            <p>Light breeze, 4 m/s, South-Southeast</p>
+        </li>
+        <li class="weather-characteristic">
+            <span>Облачность</span>
+            <p>Cloudy</p>
+        </li>
+        <li class="weather-characteristic">
+            <span>Давление</span>
+            <p>1006 hpa</p>
+        </li>
+        <li class="weather-characteristic">
+            <span>Влажность</span>
+            <p>92 %</p>
+        </li>
+        <li class="weather-characteristic">
+            <span>Координаты</span>
+            <p>[59.89, 30.26]</p>
+        </li>
+    </ul>
 `;
 
 const spbFav = `<div class="current-city-loader"></div>`
@@ -282,7 +320,7 @@ describe('CLIENT: load info about current city', () => {
     it('fill loader for current city', (done) => {
         client.currentCityInfoLoader();
         const loader = document.getElementsByClassName('current-city-info')[0];
-        loader.innerHTML.should.be.eql(spbCur);
+        loader.innerHTML.should.be.eql(spbCurrentFill);
         done()
     });
 
@@ -304,7 +342,7 @@ describe('CLIENT: load info about current city', () => {
         fetchMock.once(url, spbResponse);
         client.fillCurrentCityInfo('coordinates', [`lat=${lat}`, `lon=${lon}`]).then((res) => {
             const currentCity = document.getElementsByClassName('current-city-info')[0];
-            currentCity.innerHTML.should.be.eql(spbCurrent);
+            currentCity.innerHTML.should.be.eql(spbCur);
             done();
         }).catch(done);
     });
@@ -317,9 +355,8 @@ describe('CLIENT: load info about current city', () => {
         client.getLocation()
         geolocate.send({latitude: 59.89, longitude: 30.26});
         const currentCity = document.getElementsByClassName('current-city-info')[0];
-        currentCity.innerHTML.should.be.eql(spbCurrent);
+        currentCity.innerHTML.should.be.eql(currentCityMainCityByPosition);
         done();
-
     });
 })
 
@@ -348,7 +385,7 @@ describe('CLIENT: add new favourite city', () => {
         form.getElementsByTagName('input')[0].value = cityName;
         client.addNewCity().then((res) => {
             let lastCity = document.getElementsByClassName('favorite-cities')[0].lastChild;
-            lastCity.innerHTML.should.be.eql(spbFavourite);
+            lastCity.innerHTML.should.be.eql(spbCurrentTrim);
             done();
         }).catch(done);
     });
@@ -362,10 +399,10 @@ describe('CLIENT: add new favourite city', () => {
         let form = document.forms.namedItem('addNewCity');
         form.getElementsByTagName('input')[0].value = cityName;
         alert = sinon.spy();
-        client.addNewCity().then((res) => {
-            expect(alert.calledOnce).to.be.true;
+        client.addNewCity().then((res) => {                                                                   expect(!
+            alert.calledOnce                                                                                        ).to.be.true;
             done();
-        })
+        }).catch(done);
     });
 
     it('get alert for wrong city name', (done) => {
