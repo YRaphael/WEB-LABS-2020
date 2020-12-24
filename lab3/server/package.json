@@ -17,8 +17,7 @@
     "node-fetch": "^2.6.1",
     "pg": "^8.5.1",
     "pg-promise": "^10.8.1",
-    "sinon": "^9.2.1",
-    "sinon-mongo": "^1.1.0"
+    "sinon": "^9.2.1"
   },
   "devDependencies": {
     "request": "^2.88.2",

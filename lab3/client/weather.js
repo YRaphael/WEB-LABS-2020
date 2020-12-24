@@ -12,7 +12,7 @@ addNewCityForm.addEventListener('submit', (event) => {
 })
 
 function request(endpoint, queryParams) {
-    const base = 'http://localhost:8081/weather/';
+    const base = 'http://localhost:9090/weather/';
     const url = base + endpoint + '?' + queryParams.join('&');
     return fetch(url).then((response) => {
         if (response.ok) {
@@ -26,7 +26,7 @@ function request(endpoint, queryParams) {
 }
 
 function addSavedCities() {
-    fetch('http://localhost:8081/favourites').then((res) => {
+    fetch('http://localhost:9090/favourites').then((res) => {
         if (res.ok) {
             return res.json()
         }
@@ -177,7 +177,7 @@ function addNewCity() {
     addNewCityForm.reset();
     request('city', ['q=' + cityName]).then((jsonResult) => {
         // alert(jsonResult.name);
-        fetch('http://localhost:8081/favourites', {
+        fetch('http://localhost:9090/favourites', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
@@ -233,7 +233,7 @@ function deleteCity(cityName) {
     const delBtn = document.getElementById( cityName.split(' ').join('-') ).querySelector('.weather-info-delete-btn');
     delBtn.style.backgroundColor = '#b0bbc1';
     delBtn.disabled = true;
-    fetch('http://localhost:8081/favourites', {
+    fetch('http://localhost:9090/favourites', {
         method: 'DELETE',
         headers: {
             "Content-Type": "application/json"
