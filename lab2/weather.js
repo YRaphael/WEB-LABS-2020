@@ -185,6 +185,7 @@ function addNewCity(event) {
     const newCity = newCityLoaderInfo();
     request(['q=' + cityName]).then((jsonResult) => {
         if (jsonResult) {
+            console.log(jsonResult)
             if (jsonResult && !localStorage.hasOwnProperty(jsonResult.name)) {
                 localStorage.setItem(jsonResult.name, '');
                 addCity(jsonResult, newCity);
@@ -192,6 +193,9 @@ function addNewCity(event) {
                 alert("City already exists");
                 newCity.remove();
             }
+        }else{
+            console.log(jsonResult)
+            newCity.remove();
         }
     });
 }
