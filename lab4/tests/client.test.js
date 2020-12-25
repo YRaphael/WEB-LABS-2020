@@ -3,19 +3,21 @@ browserEnv(['navigator'])
 
 const chai = require('chai');
 const chai_http = require('chai-http');
-chai.use(chai_http);
-const expect = require('chai').expect;
-const mocha = require('mocha');
 const sinon = require('sinon');
-const afterEach = mocha.afterEach;
-const beforeEach = mocha.beforeEach;
 const fetch = require('isomorphic-fetch');
 const fetchMock = require('fetch-mock');
+const expect = require('chai').expect;
 
+const mocha = require('mocha');
+const afterEach = mocha.afterEach;
 const describe = mocha.describe;
 const it = mocha.it;
-chai.should();
+
 const JSDOM = require('jsdom').JSDOM;
+
+chai.use(chai_http);
+chai.should();
+
 html_full = `<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -132,27 +134,6 @@ html_full = `<head>
 </template>
 <script src="client/weather.js"></script>
 </body>`
-
-
-
-window = new JSDOM(html_full).window;
-document = window.document;
-let client = require('../client/weather');
-global.window = window;
-window.alert = sinon.spy();
-global.document = window.document;
-global.navigator = {
-    userAgent: 'node.js'
-};
-global.fetch = fetch;
-global.alert = window.alert;
-global.FormData = window.FormData;
-
-const geolocate = require('mock-geolocation');
-const {getAddNewCityForm} = require("../client/weather");
-geolocate.use();
-
-client.init();
 const baseURL = 'http://localhost:9090';
 
 const spbResponse = {
@@ -310,21 +291,43 @@ const spbCur = `
 
 const spbFav = `<div class="current-city-loader"></div>`
 
+window = new JSDOM(html_full).window;
+const geolocate = require('mock-geolocation');
+geolocate.use();
 
-describe('CLIENT: load info about current city', () => {
-    afterEach(() => {
-        fetchMock.done();
-        fetchMock.restore();
-    });
+document = window.document;
+global.window = window;
+global.document = window.document;
+global.navigator = {
+    userAgent: 'node.js'
+};
+global.fetch = fetch;
+global.alert = window.alert;
+global.FormData = window.FormData;
 
-    it('fill loader for current city', (done) => {
+window.alert = sinon.spy();
+let client = require('../client/weather');
+
+const {getAddNewCityForm} = require("../client/weather");
+
+client.prepare();
+
+
+const afterTest = () => {
+    fetchMock.done();
+    fetchMock.restore();
+}
+describe('CLIENT_SIDE: load info about current city', () => {
+    afterEach(afterTest);
+
+    it('Test: fill loader for current city', (done) => {
         client.currentCityInfoLoader();
         const loader = document.getElementsByClassName('current-city-info')[0];
         loader.innerHTML.should.be.eql(spbCurrentFill);
         done()
     });
 
-    it('load current city by city name', (done) => {
+    it('Test: load current city by city name', (done) => {
         const cityName = 'Saint Petersburg'
         const url = baseURL + '/weather/city?q=' + cityName;
         fetchMock.once(url, spbResponse);
@@ -335,7 +338,7 @@ describe('CLIENT: load info about current city', () => {
         }).catch(done);
     });
 
-    it('load current city by coordinates', (done) => {
+    it('Test: load current city by coordinates', (done) => {
         let lat = '59.89';
         let lon = '30.26';
         const url = baseURL + '/weather/coordinates?lat=' + lat + '&lon=' + lon;
@@ -347,7 +350,7 @@ describe('CLIENT: load info about current city', () => {
         }).catch(done);
     });
 
-    it('load main city by position', (done) => {
+    it('Test: load main city by position', (done) => {
         let lat = '59.89';
         let lon = '30.26';
         const url = baseURL + '/weather/coordinates?lat=' + lat + '&lon=' + lon;
@@ -360,13 +363,10 @@ describe('CLIENT: load info about current city', () => {
     });
 })
 
-describe('CLIENT: add new favourite city', () => {
-    afterEach(() => {
-        fetchMock.reset();
-        fetchMock.restore();
-    });
+describe('CLIENT_SIDE: add new favourite city', () => {
+    afterEach(afterTest);
 
-    it('add city function', (done) => {
+    it('Test: add city function', (done) => {
         let newCity = client.newCityLoaderInfo();
         client.addCity(spbResponse, newCity);
         const lastCity = document.getElementsByClassName('favorite-cities')[0].lastChild;
@@ -375,7 +375,7 @@ describe('CLIENT: add new favourite city', () => {
         done();
     });
 
-    it('add new city', (done) => {
+    it('Test: add new city', (done) => {
         const cityName = 'Saint Petersburg'
         let url = baseURL + '/weather/city?q=' + cityName;
         fetchMock.get(url, spbResponse);
@@ -390,7 +390,7 @@ describe('CLIENT: add new favourite city', () => {
         }).catch(done);
     });
 
-    it('try add city twice', (done) => {
+    it('Test: try add city twice', (done) => {
         const cityName = 'Saint Petersburg'
         let url = baseURL + '/weather/city?q=' + cityName;
         fetchMock.once(url, spbResponse);
@@ -405,7 +405,7 @@ describe('CLIENT: add new favourite city', () => {
         }).catch(done);
     });
 
-    it('get alert for wrong city name', (done) => {
+    it('Test: get alert for wrong city name', (done) => {
         const cityName = 'Saint Peterburg'
         let url = baseURL + '/weather/city?q=' + cityName;
         alert = sinon.spy();
@@ -418,13 +418,10 @@ describe('CLIENT: add new favourite city', () => {
 
 })
 
-describe('CLIENT: check request', () => {
-    afterEach(() => {
-        fetchMock.reset();
-        fetchMock.restore();
-    });
+describe('CLIENT_SIDE: check request', () => {
+    afterEach(afterTest);
 
-    it('get alert for wrong city name', (done) => {
+    it('Test: get alert for wrong city name', (done) => {
         const cityName = 'Saint Peterburg'
         let url = baseURL + '/weather/city?q=' + cityName;
         alert = sinon.spy();
@@ -435,7 +432,7 @@ describe('CLIENT: check request', () => {
         });
     });
 
-    it('get alert for server error', (done) => {
+    it('Test: get alert for server error', (done) => {
         const cityName = 'Saint Petersburg'
         let url = baseURL + '/weather/city?q=' + cityName;
         alert = sinon.spy();
@@ -447,13 +444,10 @@ describe('CLIENT: check request', () => {
     });
 })
 
-describe('CLIENT: get all favourites cities', () => {
-    afterEach(() => {
-        fetchMock.reset();
-        fetchMock.restore();
-    });
+describe('CLIENT_SIDE: get all favourites cities', () => {
+    afterEach(afterTest);
 
-    it('get cities from server', (done) => {
+    it('Test: get cities from server', (done) => {
         const cityName = 'Saint Petersburg'
         let url = baseURL + '/weather/city?q=' + cityName;
         fetchMock.get(url, spbResponse);

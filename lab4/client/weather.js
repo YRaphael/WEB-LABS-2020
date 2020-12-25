@@ -373,7 +373,7 @@ function getTimeOfDay(jsonResult) {
 }
 
 module.exports = {
-    init: init,
+    prepare: init,
     currentCityInfoLoader: currentCityInfoLoader,
     fillCurrentCityInfo: fillCurrentCityInfo,
     getLocation: getLocation,
